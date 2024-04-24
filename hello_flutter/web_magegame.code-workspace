@@ -1,0 +1,18 @@
+{
+  "folders": [
+	{
+		"path": "../../WEB-Tutorial/web_magegame/web_magegame"
+	},
+	{
+		"path": "../../WEB-Tutorial"
+	},
+	{
+		"path": "../../DratAndFlutter_Nomadcoders"
+	},
+	{
+		"name": "Sparta_Flutter",
+		"path": ".."
+	}
+],
+  "settings": {}
+}
