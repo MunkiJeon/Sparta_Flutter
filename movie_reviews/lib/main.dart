@@ -50,40 +50,82 @@ class HomePage extends StatelessWidget {
     ];
 
     // 화면에 보이는 영역
-    return const Scaffold(
-      // appBar: AppBar(
-      //   // title: const Text(
-      //   //   'Movie Reviews',
-      //   //   style: TextStyle(fontSize: 35),
-      //   // ),
-      // ),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 25,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Movie Reviews',
-                  style: TextStyle(fontSize: 35),
-                ),
-                Icon(Icons.account_box),
-              ],
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: '영화 제목을 입력해 주세요.'),
-            ),
-            Divider(
-              thickness: 3,
-              color: Colors.blue,
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        centerTitle: false,
+        iconTheme: const IconThemeData(color: Colors.black),
+        title: const Text(
+          "Movie Reviews",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.person_outline),
+          )
+        ],
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "영화 제목을 검색해주세요.",
+                border: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.black),
+                ),
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ),
+          const Divider(height: 1),
+          Expanded(
+            child: ListView.builder(
+              itemCount: dataList.length,
+              itemBuilder: (context, index) {
+                String category = dataList[index]['category'];
+                String imgUrl = dataList[index]['imgUrl'];
+
+                return Card(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.network(
+                        imgUrl,
+                        width: double.infinity,
+                        height: 200,
+                        fit: BoxFit.cover,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 200,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Text(
+                        category,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 36,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
