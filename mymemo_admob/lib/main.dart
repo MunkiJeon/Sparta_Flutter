@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,6 +13,7 @@ late SharedPreferences prefs;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+  MobileAds.instance.initialize();
   runApp(
     MultiProvider(
       providers: [
@@ -41,6 +45,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final BannerAd myBanner = BannerAd(
+    // Test 광고 ID, 광고 승인받은 후 생성한 광고 unit ID 로 바꾸기
+    adUnitId: Platform.isAndroid
+        ? 'ca-app-pub-3940256099942544/6300978111' // Android ad unit ID
+        : 'ca-app-pub-3940256099942544/2934735716', // iOS ad unit ID
+    size: AdSize.fullBanner,
+    request: AdRequest(),
+    listener: BannerAdListener(
+      onAdFailedToLoad: (ad, error) {
+        ad.dispose();
+      },
+    ),
+  );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    myBanner.load();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MemoService>(
@@ -100,6 +125,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
+          ),
+          bottomNavigationBar: Container(
+            alignment: Alignment.center,
+            width: myBanner.size.width.toDouble(),
+            height: myBanner.size.height.toDouble(),
+            child: AdWidget(ad: myBanner),
           ),
         );
       },
