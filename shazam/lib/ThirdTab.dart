@@ -91,7 +91,7 @@ class ThirdTab extends StatelessWidget {
                             onPressed: () {},
                             style: ButtonStyle(
                               backgroundColor:
-                                  MaterialStateProperty.all(Colors.white),
+                                  WidgetStateProperty.all(Colors.white),
                             ),
                             child: Text(
                               "국가 및 도시별 차트",
